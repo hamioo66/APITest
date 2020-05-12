@@ -5,7 +5,7 @@ import time
 import random
 
 
-from public_method.util_py3 import Prpcrypt
+from util_py3 import Prpcrypt
 
 # header = {
 #     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -37,7 +37,7 @@ def AES_parameter(kwargs):
     e = pc.encrypt(dict_to_json)
     return e
 
-def common(size, page=None, timeStamp=None, batchNumber=None):
+def common(size, page=None, timeStamp=None, batchNumber=None, title=None):
     print('page:%s, timeStamp:%s, batchNumber:%s' % (page, timeStamp, batchNumber))
     if timeStamp:
         parms['body']['timeStamp'] = timeStamp
@@ -55,12 +55,8 @@ def common(size, page=None, timeStamp=None, batchNumber=None):
         return
     res = response.json()
     request_time = response.elapsed.total_seconds()
-    news = res['data'][-1]
-    id = news.get('id')
-    title = news.get('title').replace(',', '')
     with open('requestTime.txt', 'a', encoding='utf-8')as f1:
-        f1.write('title：%s，id：%s，page：%s，size：%s, 响应时间：%s，时间戳：%s，batchNumber：%s，请求参数：%s \n' % (
-        title, id, page, size, request_time, timeStamp, batchNumber, parms))
+        f1.write('title：%s，page：%s，size：%s, 响应时间：%s，时间戳：%s，batchNumber：%s，请求参数：%s \n' % (title, page, size, request_time, timeStamp, batchNumber, parms))
     return res
 
 
@@ -72,15 +68,17 @@ def monitor_news(pageCount):
                 news = res['data'][-1]
                 timeStamp = news.get('timeStamp')
                 batchNumber = news.get('batchNumber')
+                title = news.get('title').replace(',', '')
                 with open('timeStamp10.txt', 'w', encoding='utf-8')as f10:
-                    f10.write(timeStamp+','+batchNumber)
+                    f10.write(timeStamp+','+batchNumber+','+title)
             else:
                 res = common(size)
                 news = res['data'][-1]
                 timeStamp = news.get('timeStamp')
                 batchNumber = news.get('batchNumber')
+                title = news.get('title').replace(',', '')
                 with open('timeStamp15.txt', 'w', encoding='utf-8')as f15:
-                    f15.write(timeStamp+','+batchNumber)
+                    f15.write(timeStamp+','+batchNumber+','+title)
 
     else:
         for size in [10, 15]:
@@ -88,13 +86,14 @@ def monitor_news(pageCount):
                 with open('timeStamp10.txt', 'r', encoding='utf-8')as f10:
                     content = f10.read()
                 if content:
-                    timeStamp, batchNumber = content.split(',')
-                    res = common(size, pageCount, timeStamp, batchNumber)
+                    timeStamp, batchNumber, title = content.split(',')
+                    res = common(size, pageCount, timeStamp, batchNumber, title)
                     news = res['data'][-1]
                     new_timeStamp = news.get('timeStamp')
                     new_batchNumber = news.get('batchNumber')
+                    new_title = news.get('title').replace(',', '')
                     with open('timeStamp10.txt', 'w', encoding='utf-8')as f10:
-                        f10.write(new_timeStamp+','+new_batchNumber)
+                        f10.write(new_timeStamp+','+new_batchNumber+','+new_title)
                 else:
                     with open('requestTime.txt', 'a', encoding='utf-8')as f:
                         f.write('page：%s，size：%s，接口响应时间获取失败，时间戳和batchNumber为空 \n' % (pageCount, size))
@@ -104,13 +103,14 @@ def monitor_news(pageCount):
                 with open('timeStamp15.txt', 'r', encoding='utf-8')as f15:
                     content = f15.read()
                 if content:
-                    timeStamp, batchNumber = content.split(',')
-                    res = common(size, pageCount, timeStamp, batchNumber)
+                    timeStamp, batchNumber, title = content.split(',')
+                    res = common(size, pageCount, timeStamp, batchNumber, title)
                     news = res['data'][-1]
                     new_timeStamp = news.get('timeStamp')
                     new_batchNumber = news.get('batchNumber')
+                    new_title = news.get('title').replace(',', '')
                     with open('timeStamp15.txt', 'w', encoding='utf-8')as f15:
-                        f15.write(new_timeStamp+','+new_batchNumber)
+                        f15.write(new_timeStamp+','+new_batchNumber+','+new_title)
                 else:
                     with open('requestTime.txt', 'a', encoding='utf-8')as f:
                         f.write('page：%s，size：%s，接口响应时间获取失败，时间戳和batchNumber为空 \n' % (pageCount, size))
