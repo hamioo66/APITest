@@ -3,8 +3,6 @@ import json
 import requests
 import time
 import random
-
-
 from util_py3 import Prpcrypt
 
 # header = {
@@ -22,6 +20,7 @@ parms = {"header":{"appVersion":"4.0.2","cmdId":0,"platformVersion":"4.0.2","act
 
 def get_response(url, data=None, json=None):
     try:
+
         response = requests.post(url, data=data, json=json)
         response.raise_for_status()
         response.encoding = response.apparent_encoding
@@ -55,7 +54,7 @@ def common(size, page=None, timeStamp=None, batchNumber=None, title=None):
         return
     res = response.json()
     request_time = response.elapsed.total_seconds()
-    with open('requestTime.txt', 'a', encoding='utf-8')as f1:
+    with open('file/requestTime.txt', 'a', encoding='utf-8')as f1:
         f1.write('title：%s，page：%s，size：%s, 响应时间：%s，时间戳：%s，batchNumber：%s，请求参数：%s \n' % (title, page, size, request_time, timeStamp, batchNumber, parms))
     return res
 
@@ -69,7 +68,7 @@ def monitor_news(pageCount):
                 timeStamp = news.get('timeStamp')
                 batchNumber = news.get('batchNumber')
                 title = news.get('title').replace(',', '')
-                with open('timeStamp10.txt', 'w', encoding='utf-8')as f10:
+                with open('file/timeStamp10.txt', 'w', encoding='utf-8')as f10:
                     f10.write(timeStamp+','+batchNumber+','+title)
             else:
                 res = common(size)
@@ -77,13 +76,13 @@ def monitor_news(pageCount):
                 timeStamp = news.get('timeStamp')
                 batchNumber = news.get('batchNumber')
                 title = news.get('title').replace(',', '')
-                with open('timeStamp15.txt', 'w', encoding='utf-8')as f15:
+                with open('file/timeStamp15.txt', 'w', encoding='utf-8')as f15:
                     f15.write(timeStamp+','+batchNumber+','+title)
 
     else:
         for size in [10, 15]:
             if 10 == size:
-                with open('timeStamp10.txt', 'r', encoding='utf-8')as f10:
+                with open('file/timeStamp10.txt', 'r', encoding='utf-8')as f10:
                     content = f10.read()
                 if content:
                     timeStamp, batchNumber, title = content.split(',')
@@ -92,15 +91,15 @@ def monitor_news(pageCount):
                     new_timeStamp = news.get('timeStamp')
                     new_batchNumber = news.get('batchNumber')
                     new_title = news.get('title').replace(',', '')
-                    with open('timeStamp10.txt', 'w', encoding='utf-8')as f10:
+                    with open('file/timeStamp10.txt', 'w', encoding='utf-8')as f10:
                         f10.write(new_timeStamp+','+new_batchNumber+','+new_title)
                 else:
-                    with open('requestTime.txt', 'a', encoding='utf-8')as f:
+                    with open('file/requestTime.txt', 'a', encoding='utf-8')as f:
                         f.write('page：%s，size：%s，接口响应时间获取失败，时间戳和batchNumber为空 \n' % (pageCount, size))
                         print('page：%s，size：%s，接口响应时间获取失败，时间戳和batchNumber为空 \n' % (pageCount, size))
                         return
             else:
-                with open('timeStamp15.txt', 'r', encoding='utf-8')as f15:
+                with open('file/timeStamp15.txt', 'r', encoding='utf-8')as f15:
                     content = f15.read()
                 if content:
                     timeStamp, batchNumber, title = content.split(',')
@@ -109,10 +108,10 @@ def monitor_news(pageCount):
                     new_timeStamp = news.get('timeStamp')
                     new_batchNumber = news.get('batchNumber')
                     new_title = news.get('title').replace(',', '')
-                    with open('timeStamp15.txt', 'w', encoding='utf-8')as f15:
+                    with open('file/timeStamp15.txt', 'w', encoding='utf-8')as f15:
                         f15.write(new_timeStamp+','+new_batchNumber+','+new_title)
                 else:
-                    with open('requestTime.txt', 'a', encoding='utf-8')as f:
+                    with open('file/requestTime.txt', 'a', encoding='utf-8')as f:
                         f.write('page：%s，size：%s，接口响应时间获取失败，时间戳和batchNumber为空 \n' % (pageCount, size))
                         print('page：%s，size：%s，接口响应时间获取失败，时间戳和batchNumber为空 \n' % (pageCount, size))
                         return
@@ -125,7 +124,7 @@ if __name__ == '__main__':
             print('正在请求第%s页' % i)
             monitor_news(i)
             time.sleep(random.randint(1, 5))
-        with open('requestTime.txt', 'a', encoding='utf-8')as f:
+        with open('file/requestTime.txt', 'a', encoding='utf-8')as f:
             f.write('\n')
         print('跑完第%s轮' % count)
         count += 1

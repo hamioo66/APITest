@@ -6,7 +6,7 @@ describle:用户登录接口
 """
 import requests
 import json
-import util
+import util_py3
 import re
 
 
@@ -38,7 +38,7 @@ class web_requests(object):
         data["pw"] = password
         print(data)
         request = "2Rc75HULvIxtcnOZfmdp8RZMOJTeTqBhKd3iDur1ajQzxVlcfcWvgUc9Uh8MT5rQa6DI1xYu3itBv48JXKrwYzQI5PXCD/1v8h7r1ufyBkLvvdYzLwmd/MncuCaV8h755c+LG0fx5FKuINhAld0TyXjj48/YXAZZxVH7TwWsXyU4gLSET6jsDUe2WT37+i9PzGlbhqMY0vIHMzkeNNiAZVEerj1xLM+45wutrQMTCGbLMFsjadVDHQB4DUnabrgZTWjHRYfKFTeKwwfQIdrUs6+wag92MenTmlU4n1c3wDdt1LwUyYvu6jBBPhXY5Z/gByPfh6bGL5mlHw77pt6uVUbwBD01eA/H06Bx6jbJzPnPyAcroFEI7wtk0cVg1qYm7Cdzbx3tR7MnEqCuJ8BmnrJSxqVNHbzVwEead+aNGAfuQk4zDmDwqwQ+1ss0GZm5+fICmd/Ws1ry0CACtilRZg=="
-        pc = util.Prpcrypt('d3YmI1BUOSE2S2YmalBVZUQ=', '0000000000000000')
+        pc = util_py3.Prpcrypt('d3YmI1BUOSE2S2YmalBVZUQ=', '0000000000000000')
         e = pc.decrypt(request)
         print(e)
         r = requests.post(url=url, data=request)
