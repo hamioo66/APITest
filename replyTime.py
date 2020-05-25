@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import requests
-from util_py3 import Prpcrypt
+from common.util_py3 import Prpcrypt
 import json
 
 url = "https://data2c.jdddata.com/number/info/list/v1"
@@ -37,7 +37,7 @@ def page_to():
 
 
 if __name__ == "__main__":
-    parms_to('1','','','','')
+    parms_to('1','2','15','','')
     #parms_to(2,10,)
     # datas = get_response(url, data={'request': newParms})
     # print(datas.json())

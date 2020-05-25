@@ -6,8 +6,7 @@ describle:用户登录接口
 """
 import requests
 import json
-import util_py3
-import re
+from common import util_py3
 
 
 class web_requests(object):

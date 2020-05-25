@@ -6,7 +6,7 @@ describle:
 """
 import requests
 params = {"KEY":"VALUE"}
-r= requests.get('https://www.baidu.com',params=params)
+r= requests.get('https://www.baidu.com', params=params)
 print(r.status_code)
 
 print(r.text)

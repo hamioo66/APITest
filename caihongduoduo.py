@@ -3,7 +3,7 @@ import json
 import requests
 import time
 import random
-from util_py3 import Prpcrypt
+from common.util_py3 import Prpcrypt
 
 # header = {
 #     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',

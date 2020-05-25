@@ -178,15 +178,21 @@ import sys
 #         #pass
 # #print(ord('\n'))
 # print(j)
-
-print(input()[::-1])
-
-print(input())
-a = int(input())
-b = bin(a)
-#print(b)
-c = 0
-for i in b:
-    if i == '1':
-        c+=1
-print(c)
+#
+# print(input()[::-1])
+#
+# print(input())
+# a = int(input())
+# b = bin(a)
+# #print(b)
+# c = 0
+# for i in b:
+#     if i == '1':
+#         c+=1
+# print(c)
+#
+# from log.log import log
+# log.info('556525555')
+print(round(1.1135, 3))
+print(round(1.1125, 3))
+print(round(1.675,2))
