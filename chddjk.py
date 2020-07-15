@@ -83,7 +83,7 @@ if __name__ == '__main__':
                 aes = Aes_crypt()
                 request = aes.en_crypt(parames)
                 response = requests.post(url, data={"request": request}).json()
-                print(response)
+                #print(response)
                 num = len(response["data"]["schemeContentModelList"])
                 member = {}
                 for j in range(num):

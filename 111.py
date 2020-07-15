@@ -193,6 +193,113 @@ import sys
 #
 # from log.log import log
 # log.info('556525555')
-print(round(1.1135, 3))
-print(round(1.1125, 3))
-print(round(1.675,2))
+# print(round(1.1135, 3))
+# print(round(1.1125, 3))
+# print(round(1.675, 2))
+"""
+['and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'exec', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'not', 'or', 'pass', 'print', 'raise', 'return', 'try', 'while', 'with', 'yield']
+"""
+# 格式化输出
+# age = 18
+# print('我的名字是%s，我的国籍是%s'%("小张","中国"))
+# print("我的年级是：%d岁"%age)
+# print("aaa","bbb","ccc")
+# print("www","baidu","com",sep=".")
+# print("hello",end="")
+# print("world",end="\t")
+# print("python",end="\n")
+# print("end")
+
+# password = input("请输入密码:")
+# print("您刚刚输入的密码是:",password)
+# print(type(password))
+# if True:
+#     print("True")
+# else:
+#     print("False")
+# i = 1
+# sum = 0
+# while i < 101:
+#     sum = sum+i
+#     i = i+1
+# print(sum)
+
+
+# #增
+# info = {"name":"吴彦祖","age":8}
+# newID = input("请输入新的学号")
+# info["id"] = newID
+# print(info["id"])
+# #删
+# info = {"name":"吴彦祖","age":8}
+# print("删除前：%s"%info["name"])
+# del info["name"]
+# print("删除后：%s"%info)
+# 改
+# 查
+from bs4 import BeautifulSoup  # 网页解析获取数据
+import re  # 正则白哦大师，进行文字匹配
+import urllib.request, urllib.error  # 指定url获取网页数据
+import xlwt  # 进行excel操作
+import sqlite3  # 进行sqllite数据库操作
+import urllib.parse
+
+
+# 获取一个post请求
+# try:
+#     data = bytes(urllib.parse.urlencode({"hello": "world"}), encoding="UTF-8")
+#     response = urllib.request.urlopen("http://httpbin.org/post", data=data,timeout=0.01)
+#     print(response.read().decode('utf-8'))
+# except urllib.error.URLError as e:
+#     print("time out")
+#
+#获取一个get请求
+try:
+    response = urllib.request.urlopen("http://www.baidu.com",timeout=0.01)
+    print(response.read().decode('utf-8'))
+except urllib.error.URLError as e:
+    print("time out")
+
+
+
+# response = urllib.request.urlopen("http://www.baidu.com")
+# print(response.headers)
+# print(response.getheader("Server"))
+#
+# headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"}
+# url = "https://www.douban.com"
+# #data=bytes(urllib.parse.urlencode({"name":"hamioo"}), encoding="UTF-8")
+# req = urllib.request.Request(url=url,headers=headers)
+# response = urllib.request.urlopen(req)
+# print(response.read().decode('utf-8'))
+
+file = open("./baidu.html","rb")
+html = file.read().decode("utf-8")
+bs = BeautifulSoup(html,"html.parser")
+# print(bs.title)
+# print(bs.title.string)
+# print(bs.a.attrs)
+#
+# # 文档的遍历
+# print(bs.head.contents)
+#
+# print(bs.head.contents[1])
+
+#文档的搜索
+#find_all()
+#字符串过滤：会查找与字符串完全匹配的内容
+#t_list = bs.find_all("a")
+
+#正则表达式搜索：使用search()方法匹配内容
+# t_list = bs.find_all(re.compile("a"))
+
+#传入一个函数，根据函数的要求搜索
+# def name_is_exists(tag):
+#     return tag.has_attr("name")
+# t_list = bs.find_all(name_is_exists)
+
+#kwargs 参数
+# t_list = bs.find_all(id = "head")
+t_list = bs.find_all(text=re.compile("\d"))
+for item in t_list:
+    print(item)

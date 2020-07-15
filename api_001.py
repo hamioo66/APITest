@@ -17,10 +17,11 @@ data = {"header": {"appVersion": "1.5.3", "idfa": "", "cmdName": "app_zz", "user
                    "platformCode": "Android"}, "body": "{}"}
 Jdata = json.dumps(data, sort_keys=True)
 request = Prpcrypt('d3YmI1BUOSE2S2YmalBVZUQ=', "0000000000000000").encrypt(Jdata)
-response = requests.post(url, data={'request': request})
-assert response.status_code
-s = GetKeyValue(o=response.json(), mode='j')
-b = GetKeyValue(o=data,mode='j')
+response = requests.post(url, data={'request': request}).json()
+# assert response.status_code
+print(json.dumps(response, indent=2, sort_keys=True, ensure_ascii=False))   #
+s = GetKeyValue(o=response, mode='j')
+b = GetKeyValue(o=data, mode='j')
 # 轮播图
 bannerList = s.search_key('bannerList')
 # 中奖播报
@@ -34,7 +35,7 @@ for i in range(len(operationList[0])):
     actionName = operationList[0][i]['actionName']
     actionUrl = operationList[0][i]['actionUrl']
     print(f'首页两运营位配置了{name}{actionName}跳转链接是{actionUrl}')
-#print(type(bannerList))
-#print('首页配置了%d张轮播图,中奖播报有%d条'%(len(bannerList[0]),len(bulletinList[0])))
+# print(type(bannerList))
+# print('首页配置了%d张轮播图,中奖播报有%d条'%(len(bannerList[0]),len(bulletinList[0])))
 print(f'首页配置了{len(bannerList[0])}张轮播图,中奖播报有{len(bulletinList[0])}条')
 print(f'接口action={action}')
